@@ -1,0 +1,114 @@
+
+CREATE DATABASE IF NOT EXISTS company_test2;
+USE company_test2;
+
+
+CREATE TABLE IF NOT EXISTS `Employee` (
+    `employee_id` INT NOT NULL,
+    `user_name` VARCHAR(30) NOT NULL,
+    `first_name` VARCHAR(30) NOT NULL,
+    `last_name` VARCHAR(30) NOT NULL,
+    `position` VARCHAR(30) NOT NULL,
+    `employment_date` DATE NOT NULL,
+    `department_id` INT,
+    `manager_id` INT,
+    `rate` FLOAT NOT NULL,
+    `bonus` FLOAT,
+    PRIMARY KEY (`employee_id`),
+    UNIQUE (`user_name`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Department` (
+    `department_id` INT NOT NULL,
+    `department_name` VARCHAR(30) NOT NULL,
+    `city` VARCHAR(30) DEFAULT 'Lviv',
+    `street` VARCHAR(50) NOT NULL,
+    `building_no` INT,
+    PRIMARY KEY (`department_id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Product` (
+    `product_id` INT NOT NULL,
+    `product_name` VARCHAR(40) NOT NULL,
+    `product_description` VARCHAR(150) NOT NULL,
+    `category` VARCHAR(15) NOT NULL,
+    `manufacture` VARCHAR(30) NOT NULL,
+    `product_type` VARCHAR(15) NOT NULL,
+    `amount` INT NOT NULL,
+    `price` FLOAT NOT NULL,
+    PRIMARY KEY (`product_id`)
+);
+
+
+CREATE TABLE IF NOT EXISTS `Customer` (
+    `customer_id` INT AUTO_INCREMENT NOT NULL,
+    `first_name` VARCHAR(30) NOT NULL,
+    `last_name` VARCHAR(30) NOT NULL,
+    `gender` VARCHAR(1) NOT NULL,
+    `birth_date` DATE NOT NULL,
+    `phone_number` BIGINT NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
+    `discount` INT,
+    PRIMARY KEY (`customer_id`)
+);
+
+CREATE TABLE IF NOT EXISTS `Invoice` (
+    `invoice_id` BIGINT NOT NULL,
+    `employee_id` INT NOT NULL,
+    `customer_id` INT,
+    `payment_method` INT,
+    `transaction_moment` DATETIME NOT NULL,
+    `status` VARCHAR(10) NOT NULL,
+    PRIMARY KEY (`invoice_id`)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS `Orders` (
+    `orders_id` INT AUTO_INCREMENT NOT NULL,
+    `employee_id` INT NOT NULL,
+    `product_id` INT NOT NULL,
+    `customer_id` INT NOT NULL,
+    `invoice_id` BIGINT NOT NULL,
+    `orders_datetime` DATETIME NOT NULL,
+    `quantity` INT NOT NULL,
+    PRIMARY KEY (`orders_id`)
+);
+
+-- Додавання зовнішніх ключів
+ALTER TABLE `Employee` 
+    ADD CONSTRAINT `Employee_fk6` FOREIGN KEY (`department_id`) REFERENCES `Department`(`department_id`),
+    ADD CONSTRAINT `Employee_fk7` FOREIGN KEY (`manager_id`) REFERENCES `Employee`(`employee_id`);
+
+ALTER TABLE `Orders`
+    ADD CONSTRAINT `orders_fk1` FOREIGN KEY (`employee_id`) REFERENCES `Employee`(`employee_id`),
+    ADD CONSTRAINT `orders_fk2` FOREIGN KEY (`product_id`) REFERENCES `Product`(`product_id`),
+    ADD CONSTRAINT `orders_fk3` FOREIGN KEY (`customer_id`) REFERENCES `Customer`(`customer_id`),
+    ADD CONSTRAINT `orders_fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `Invoice`(`invoice_id`);
+    
+
+ALTER TABLE `Invoice`
+    ADD CONSTRAINT `invoice_fk0` FOREIGN KEY (`employee_id`) REFERENCES `Employee`(`employee_id`),
+    ADD CONSTRAINT `invoice_fk1` FOREIGN KEY (`customer_id`) REFERENCES `Customer`(`customer_id`);
+
+-- Додавання унікального обмеження для user_name
+ALTER TABLE `Employee` DROP INDEX `user_name_8`;
+ALTER TABLE `Employee` ADD UNIQUE (`user_name`);
+
+ALTER TABLE `Customer` MODIFY `phone_number` BIGINT NOT NULL;
+ALTER TABLE `Employee` MODIFY `position` varchar(30) NOT NULL;
+ALTER TABLE `Department` MODIFY `building_no` INT;
+ALTER TABLE `Employee` ADD UNIQUE (`user_name`);
+ALTER TABLE `Department` ALTER `city` SET DEFAULT 'Lviv';
+
+
+
+use company_test2;
+ALTER TABLE `Orders` DROP FOREIGN KEY `orders_fk1`;
+ALTER TABLE `Orders` DROP FOREIGN KEY `orders_fk3`;
+ALTER TABLE `Orders` DROP INDEX `orders_fk1`;
+ALTER TABLE `Orders` DROP INDEX `orders_fk3`;
+ALTER TABLE `Orders` DROP COLUMN `employee_id`;
+ALTER TABLE `Orders` DROP COLUMN `customer_id`;
