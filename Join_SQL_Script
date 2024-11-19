@@ -33,11 +33,11 @@ AS 'Customer last name',customer.first_name AS 'Customer first name’)*/
 
 -- Ex_2 INNER JOIN LEFT JOIN
 SELECT
-	o.orders_id "Orders ID",
+    o.orders_id "Orders ID",
     d.department_name "Department name",
     e.user_name "User name",
     p.product_name "Product name",
-	p.category "Product category",
+    p.category "Product category",
     i.invoice_id "Invoice ID",
     i.transaction_moment "Transaction moment",
     c.last_name "Customer last name",
@@ -50,10 +50,9 @@ LEFT JOIN customer AS c ON i.customer_id = c.customer_id
 JOIN employee AS e ON i.employee_id = e.employee_id
 JOIN department AS d ON e.department_id = d.department_id
 WHERE
-	department_name = "Mercury"
+department_name = "Mercury"
 AND transaction_moment BETWEEN "2023-07-01" AND "2023-10-01"
-ORDER BY 
-	orders_id;
+ORDER BY orders_id;
 
 
 /*Показати імена та прізвища всіх клієнтів з таблиці клієнтів, а також клієнтів без замовлень і замовлень без клієнтів
