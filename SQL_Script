@@ -1,0 +1,66 @@
+--Ex_1.1
+SELECT  *
+FROM Customer
+ORDER BY last_name;
+
+--Ex_1.2
+SELECT 
+last_name 'last_name'
+FROM Customer
+ORDER BY last_name ASC;
+
+Ex_2
+SELECT DISTINCT manufacture
+FROM Product
+ORDER BY manufacture ASC;
+
+Ex_3
+SELECT
+category,
+ product_type,
+ price ,
+ manufacture,
+ REGEXP_REPLACE( product_name, '^DELL ', '')
+ FROM Product
+
+ WHERE 
+  manufacture = 'DELL' 
+  ORDER BY product_name ASC;
+
+Ex_4
+SELECT  
+first_name 'First_name',
+last_name 'Last name',
+phone_number 'phone_number',
+birth_date,
+gender 
+FROM Customer
+WHERE gender = 'F'
+AND birth_date > '1990-01-01' 
+AND birth_date < '2000-12-31'
+ORDER BY last_name ASC;
+
+Ex_5
+SELECT 
+ product_description,
+ category
+ FROM  Product
+ WHERE category = 'NOTEBOOK'
+ AND 
+  product_description LIKE '%512GB%';
+
+Ex_6
+SELECT 
+ product_description,
+ category
+ FROM  Product
+ WHERE 
+ (category = 'NOTEBOOK'
+ OR 
+ category = 'Desktops')
+ AND 
+  product_description 
+  LIKE '%512GB%'  OR '%1TB%';
+
+
+
