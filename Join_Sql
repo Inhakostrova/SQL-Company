@@ -26,11 +26,9 @@ SELECT
     m.first_name "Manager First Name",
     m.position "Manager Title",
     m.employment_date "Manager Hire Date"
-FROM
-	employee AS e,
+FROM employee AS e,
     employee AS m
-WHERE
-	e.manager_id = m.employee_id;
+WHERE e.manager_id = m.employee_id;
 
 
 -- Ex_3 Показати список всіх працівників та назви департаментів MySQL Equijoin
@@ -42,10 +40,10 @@ SELECT
     e.department_id "Employee Department ID",
     d.department_id "Department ID",
     d.department_name "Department name"
-FROM 
-    employee AS e, department AS d
-WHERE
-	e.department_id = d.department_id;
+
+FROM employee AS e, department AS d
+
+WHEREe.department_id = d.department_id;
 
 
 -- Ex_4 Показати список працівників які здійснювали продажі MySQL INNER JOIN
@@ -57,14 +55,12 @@ SELECT
     i.employee_id "Invoice Employee ID",
     i.invoice_id "Invoice",
     i.transaction_moment "Transaction moment"
-FROM
-	employee AS e
-JOIN
-	invoice AS i
+
+FROM employee AS e
+JOIN invoice AS i
 ON 
-	e.employee_id = i.employee_id
-ORDER BY
-	i.transaction_moment;
+e.employee_id = i.employee_id
+ORDER BY i.transaction_moment;
 
 
 -- Ex_5 Показати список працівників які здійснювали продажі MySQL NATURAL JOIN
@@ -76,12 +72,10 @@ SELECT
     i.employee_id "Invoice Employee ID",
     i.invoice_id "Invoice",
     i.transaction_moment "Transaction moment"
-FROM 
-	employee AS e
-NATURAL JOIN 
-	invoice AS i
-ORDER BY 
-	i.transaction_moment;
+
+FROM employee AS e
+NATURAL JOIN invoice AS i
+ORDER BY i.transaction_moment;
 
 
 -- Ex_6 Показати список працівників які здійснювали продажі та клієнтів MySQL JOIN many Tables
@@ -97,15 +91,11 @@ SELECT
     c.customer_id "Customer ID",
     c.last_name "Customer Last Name",
     c.first_name "Customer First Name"
-FROM 
-	employee AS e
-NATURAL JOIN
-	invoice AS i
-JOIN 
-	customer AS c
+FROM employee AS e
+NATURAL JOIN invoice AS i
+JOIN customer AS c
 USING (customer_id)
-ORDER BY 
-	transaction_moment;
+ORDER BY transaction_moment;
 
 -- Ex_7 Показати список працівників які здійснювали продажі для неавторизованих клієнтів MySQL LEFT/RIGHT JOIN
 SELECT
@@ -120,12 +110,10 @@ SELECT
     c.customer_id "Customer ID",
     c.last_name "Customer Last Name",
     c.first_name "Customer First Name"
-FROM 
-	employee AS e
-NATURAL JOIN
-	invoice AS i
-LEFT JOIN 
-	customer AS c
+
+FROM employee AS e
+NATURAL JOIN invoice AS i
+LEFT JOIN customer AS c
 USING (customer_id)
 WHERE customer_id IS NULL
 ORDER BY i.transaction_moment;
@@ -143,12 +131,10 @@ SELECT
     c.customer_id "Customer ID",
     c.last_name "Customer Last Name",
     c.first_name "Customer First Name"
-FROM 
-	employee AS e
-NATURAL JOIN
-	invoice AS i
-LEFT JOIN 
-	customer AS c
+
+FROM employee AS e
+NATURAL JOIN invoice AS i
+LEFT JOIN customer AS c
 USING (customer_id)
 WHERE customer_id IS NULL
 ORDER BY i.transaction_moment;
@@ -160,11 +146,11 @@ SELECT
     last_name,
     position,
     'Consulting' AS Responsibility
-FROM 
-	employee
-WHERE
-	position LIKE '%Consultant%'
+
+FROM employee
+WHERE position LIKE '%Consultant%'
 UNION
+
 SELECT
     employee_id,
     first_name,
