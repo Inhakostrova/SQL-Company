@@ -15,13 +15,11 @@ SELECT
     invoice.transaction_moment AS 'Transaction moment',
     customer.last_name AS 'Customer last name',
     customer.first_name AS 'Customer first name'
-FROM 
-orders
+FROM orders
 JOIN product ON orders.product_id = product.product_id
 JOIN invoice ON orders.invoice_id = invoice.invoice_id
 JOIN customer ON invoice.customer_id = customer.customer_id
-ORDER BY 
-orders.orders_id;
+ORDER BY orders.orders_id;
 
 
 
@@ -33,11 +31,11 @@ AS 'Customer last name',customer.first_name AS 'Customer first name’)*/
 
 -- Ex_2 INNER JOIN LEFT JOIN
 SELECT
-	o.orders_id "Orders ID",
+    o.orders_id "Orders ID",
     d.department_name "Department name",
     e.user_name "User name",
     p.product_name "Product name",
-	p.category "Product category",
+    p.category "Product category",
     i.invoice_id "Invoice ID",
     i.transaction_moment "Transaction moment",
     c.last_name "Customer last name",
@@ -49,11 +47,9 @@ JOIN invoice AS i ON o.invoice_id = i.invoice_id
 LEFT JOIN customer AS c ON i.customer_id = c.customer_id
 JOIN employee AS e ON i.employee_id = e.employee_id
 JOIN department AS d ON e.department_id = d.department_id
-WHERE
-	department_name = "Mercury"
+WHERE department_name = "Mercury"
 AND transaction_moment BETWEEN "2023-07-01" AND "2023-10-01"
-ORDER BY 
-	orders_id;
+ORDER BY orders_id;
 
 
 /*Показати імена та прізвища всіх клієнтів з таблиці клієнтів, а також клієнтів без замовлень і замовлень без клієнтів
@@ -68,15 +64,16 @@ SELECT
     c.first_name AS 'First Name',
     i.invoice_id AS 'Invoice ID',
     i.transaction_moment AS 'Transaction Moment'
-FROM 
-    customer AS c LEFT JOIN invoice AS i ON c.customer_id = i.customer_id
+FROM  customer AS c LEFT JOIN invoice AS i ON c.customer_id = i.customer_id
 UNION
+
+	
+-- Ex_3  RIGHT JOIN	
 SELECT 
     c.customer_id AS 'Customer ID',
     c.last_name AS 'Last Name',
     c.first_name AS 'First Name',
     i.invoice_id AS 'Invoice ID',
     i.transaction_moment AS 'Transaction Moment'
-FROM 
-    customer AS c RIGHT JOIN invoice AS i ON c.customer_id = i.customer_id
+FROM customer AS c RIGHT JOIN invoice AS i ON c.customer_id = i.customer_id
 ORDER BY `Invoice ID`;
